@@ -1,5 +1,7 @@
-port=3000;
+import {Platform} from 'react-native';
 
-url=`http://localhost:${port}/`;
+const API = Platform.OS === 'android'
+    ? 'http://127.0.0.1:3000/'
+    : 'http://localhost:3000/';
 
-module.export={url}
+export default API

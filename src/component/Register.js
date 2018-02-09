@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View,TouchableWithoutFeedback,Image} from 'react-native';
+import {View,TouchableWithoutFeedback,Image,Alert} from 'react-native';
 import Input from '../component/comman/Input';
 import Button from '../component/comman/Button';
 
@@ -29,7 +29,10 @@ class Register extends Component
 
         }).then((response) => response.json())
             .then((responseJson) => {
-                Alert.alert(responseJson);
+                if(responseJson=="User Register Successfully"){
+                    alert(responseJson);
+                    this.props.navigation.navigate("MainPage");
+                }
             }).catch((error) => {
             console.error(error);
         });
@@ -39,13 +42,12 @@ class Register extends Component
             <View>
                 <Image
                     source={require('/Users/lanet/Desktop/React-Native/MyShop/images/Icon.png')}
-                    style={{width:'50%',height:'30%',alignItems:'center',marginLeft:'25%',marginBottom:5}}
+                    style={{width:'80%',height:'30%',alignItems:'center',margin:'10%'}}
                 />
                 <Input
-                    placeholder="Enter Name"
                     value={this.state.UserName}
-                    onChangeText={(UserName)=>this.setState({UserName})}
-                />
+                    placeholder="Enter Name"
+                    onChangeText={UserName=>this.setState({UserName})}/>
                 <Input
                     placeholder="Enter Email"
                     value={this.state.UserEmail}
@@ -54,6 +56,7 @@ class Register extends Component
                 <Input
                     placeholder={"Enter Password"}
                     value={this.state.UserPassword}
+                    secureTextEntry
                     onChangeText={(UserPassword)=>this.setState({UserPassword})}
                 />
                 <Button onPress={this.UserRegistrationFunction.bind(this)} bgColor={style={backgroundColor:'#3D5AFE'}}>Register</Button>

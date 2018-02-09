@@ -17,40 +17,24 @@ export default Input=({value,onChangeText,placeholder,secureTextEntry})=>{
 }
 
 const Styles={
-   /*inputStyle:{
-       width:'90%',
-       height:'15%',
-       borderColor:'black',
-       paddingLeft:10,
-       borderWidth:1,
-       borderRadius:5,
-       marginBottom:10,
-       borderRadius:30,
-       color:'#000',
-       padding:15,
-       margin:15
-    },
-    viewStyle:{
-        height:40,
-        flexDirection:'row',
-        flex:1,
-        marginBottom:30,
-        alignItems:'center'
-    },*/
     inputStyle:{
-         marginRight:5,
-         marginLeft:5,
-         flex:2,
-         borderWidth:2,
-         borderColor:'black',
-         fontSize:20,
-         lineHeight:25,
-         color:'#000',
+        margin:'2%',
+        borderWidth:2,
+        borderColor:'black',
+        borderRadius:15,
+        fontSize:25,
+        width:'95%',
+        lineHeight:30,
+        paddingLeft:'3%',
+        marginTop:'3%',
+        color:'#000',
     },
-    viewStyle:{
-         height:40,
-         flexDirection:'row',
-         flex:1,
-         alignItems:'center'
+    inputViewStyle:{
+        height:200,
+        width:'100%',
+        flexDirection:'column',
+        flex:1,
+        margin:'5%',
+        alignItems:'center'
     }
 }

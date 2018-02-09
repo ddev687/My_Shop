@@ -21,7 +21,8 @@ const Styles={
         borderRadius:20,
         padding:10,
         minWidth:'35%',
-        alignItems:'center'
+        alignItems:'center',
+        marginTop:'5%'
     },
     buttonTextStyle:{
         fontSize:20,

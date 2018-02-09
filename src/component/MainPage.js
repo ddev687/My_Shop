@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {Text,TextInput,View,ImageBackground,Image,Alert,TouchableWithoutFeedback,WebView,Linking} from 'react-native';
 import Button from "./comman/Button";
 import Modal from 'react-native-modal';
-import {url} from "../config";
+import {API} from "../config";
 import {StackNavigator} from 'react-navigation';
 
 class MainPage extends Component
@@ -37,13 +37,20 @@ class MainPage extends Component
             })
         }).then((response) => response.json())
             .then((responseJson) => {
+            if(responseJson=="Login Successfully"){
+                this.setState({modalVisible:false});
+                //Alert.alert(responseJson);
+                this.props.navigation.navigate("Home");
+            }else{
                 Alert.alert(responseJson);
+            }
             }).catch((error) => {
             console.error(error);
         });
     };
 
     UserGoogleLogin = () =>{
+        //return <WebView source={{uri:'http://localhost:3000/auth/google'}}/>
        Linking.openURL('http://localhost:3000/auth/google');
     }
     UserFacebookLogin=()=>{
@@ -82,7 +89,7 @@ class MainPage extends Component
                     <Text style={Styles.textStyle}>Or</Text>
                     <Button onPress={()=>navigate("Home")} bgColor={style={backgroundColor:'gray'}}>Skip</Button>
                     <View style={{width:'100%',flexDirection:'row',height:'68%'}}>
-                        <TouchableWithoutFeedback onPress={()=>this.UserGithubLogin()}>
+                        <TouchableWithoutFeedback onPress={()=>this.UserFacebookLogin()}>
                             <Image source={require("/Users/lanet/Desktop/React-Native/MyShop/images/loginFB.png")} style={Styles.loginLogoStyle}/>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={()=>this.UserGoogleLogin()}>
@@ -115,9 +122,11 @@ class MainPage extends Component
                                               value={this.state.UserEmail}
                                               onChangeText={(UserEmail)=>this.setState({UserEmail})}
                                               style={Styles.inputStyle}
+                                              autoCorrect={false}
                                           />
                                           <TextInput
                                               placeholder="Enter Password"
+                                              secureTextEntry
                                               value={this.state.UserPassword}
                                               onChangeText={(UserPassword)=>this.setState({UserPassword})}
                                               style={Styles.inputStyle}

@@ -1,18 +1,19 @@
 import React,{Component} from 'react';
 import {View,Text,Image,Dimensions,Alert,TouchableHighlight} from 'react-native';
-
+import OnClick from "./OnClick";
+import API from '../../config';
+import axios from 'axios';
 class ProductList extends Component
 {
     constructor(props)
     {
         super(props);
-        this.state={Product_Image:[],Product_Name:[],loading:false};
+        this.state={product:[],loading:false};
     }
-    getData()
+    async getData()
     {
-        var promise=new Promise((resolve,reject)=>{
-            const pname=[],pimage=[];
-            fetch('http://localhost:3000/getProduct', {
+        var promise=await new Promise((resolve,reject)=>{
+            fetch(`${API}getProduct`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -20,15 +21,7 @@ class ProductList extends Component
                 }
             }).then((response) => response.json())
                 .then((responseJson) => {
-                    responseJson.forEach((d)=>{
-                        pimage.push(d.Product_Image);
-                        pname.push(d.Product_Name);
-                    });
-                    this.setState({Product_Image:pimage,Product_Name:pname});
-                    resolve();
-                    //this.setState({Product_Name:pname});
-                    //alert(this.state.Product_Name);
-                    //alert(this.state.Product_Image);
+                    resolve(responseJson);
                 }).catch((error) => {
                 alert(error);
                 reject(error);
@@ -36,60 +29,47 @@ class ProductList extends Component
         });
         return promise;
     }
-    componentWillMount()
+    async componentWillMount()
     {
         this.setState({ loading: true });
-        this.getData().then(()=>{
+        await this.getData().then((product)=>{
             this.setState({
                 loading:false,
+                product
             })
         })
     }
-    renderProducts = (Product_Name,Product_Image) => {
-        //alert("Name : "+Product_Name);
-        //alert("Image : "+Product_Image);
-        //alert(Product_Image);
-        //alert("Image:"+Product_Image)
-            //  for(let i=0;i>Product_Name.length();i++)
-            Product_Name.map((product,index) => {
-                return(
+    showProduct(product)
+    {
+        /*this.props.navigation.navigate("ProductDetails",{product});*/
+        this.props.onPress(product);
+    }
+    renderProducts = (product) => {
+        return product.map((product,index) => {
+            return(
+                <TouchableHighlight onPress={() => {
+                    this.showProduct(product)
+                }} key={index}>
                     <View style={Styles.productBoxStyle}>
-                        {/*<TouchableHighlight>
-                            <Image
-                                source={{uri:Product_Image}}
-                                style={{height:100,width:150,margin:10, backgroundColor:'red'}}
-                            />
-                        </TouchableHighlight>*/}
-                        <Text>{this.state.Product_Name}</Text>
+                        <Image
+                            source={{uri:product.Product_Image}}
+                            style={{height:100,width:150,margin:10}}
+                        />
+                        <Text>{product.Product_Name}</Text>
                     </View>
-                );
-            })
-
+                </TouchableHighlight>
+            );
+        });
     }
     render(){
         if (this.state.loading) {
-            console.log('This happens 4th - when waiting for data.');
             return <Text>Loading...</Text>
         }
-        var {Product_Image,Product_Name}=this.state;
+        var {product}=this.state;
         return(
             <View style={Styles.productViewStyle}>
                 {
-                    //this.renderProducts(Product_Name,Product_Image)
-                    Product_Name.map((product,index) => {
-                        return(
-                            <View style={Styles.productBoxStyle}>
-                                <TouchableHighlight>
-                                    <Image
-                                        key={index}
-                                        source={{uri:JSON.stringify(Product_Image)}}
-                                        style={{height:100,width:150,margin:10, backgroundColor:'red'}}
-                                    />
-                                </TouchableHighlight>
-                                <Text>{this.state.Product_Name}</Text>
-                            </View>
-                        );
-                    })
+                    this.renderProducts(product)
                 }
             </View>
         );
@@ -101,6 +81,7 @@ const Styles={
         margin:2,
         width:Dimensions.get('window').width/2 -6,
         height:150,
+        backgroundColor:'#fff',
         justifyContent:'center',
         alignItems:'center'
     },
