@@ -4,6 +4,7 @@ import Card from "./Card";
 import CardSection from "./CardSection";
 import Button from "./Button";
 import { PricingCard } from 'react-native-elements';
+import Stars from 'react-native-stars-rating';
 
 var tmp=[];
 class ProductDetails extends Component
@@ -15,12 +16,40 @@ class ProductDetails extends Component
     }
     renderStock()
     {
-        if(this.props.navigation.state.params.product.Product_Stock >= 0){
+        if(this.props.navigation.state.params.product.Product_Stock > 0){
             return <Text style={{fontSize:20,marginTop:'3%',marginRight:'2%'}}>In Stock</Text>
         }else{
-            return <Text>Outof Stock</Text>
+            return <Text style={{fontSize:20,marginTop:'3%',marginRight:'2%'}}>Outof Stock</Text>
         }
     }
+    /*async getData()
+    {
+        var promise=await new Promise((resolve,reject)=>{
+            fetch(`${API}checkOrder?productId=${this.props.navigation.state.params.product._id}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }).then((response) => response.json())
+                .then((responseJson) => {
+                    resolve(responseJson);
+                }).catch((error) => {
+                alert(error);
+                reject(error);
+            });
+        });
+        return promise;
+    }
+    async componentDidMount(){
+        this.setState({ loading: true });
+        await this.getData().then((rating)=>{
+            this.setState({
+                loading:false,
+                rating
+            })
+        })
+    }*/
     addToCart()
     {
         tmp.push(this.props.navigation.state.params.product._id);
@@ -45,18 +74,26 @@ class ProductDetails extends Component
                     <CardSection>
                         <PricingCard
                             color='#4f9deb'
-                            title='Free'
-                            price='$0'
-                            info={['1 User', 'Basic Support', 'All Core Features']}
-                            button={{ title: 'GET STARTED', icon: 'flight-takeoff' }}
+                            title={this.props.navigation.state.params.product.Product_Company}
+                            price={'Rs : '+this.props.navigation.state.params.product.Product_Price}
+                            info={['User Rating', 'Basic Support', 'All Core Features']}
+                            button={{ title: 'Add To Cart', icon: 'add-shopping-cart' }}
+                            containerStyle={{width:'96%',margin:'2%'}}
                         />
-                        <Text style={Styles.productNameStyle}>Rs.{this.props.navigation.state.params.product.Product_Price}</Text>
+                        {/*<Text style={Styles.productNameStyle}>Rs.{this.props.navigation.state.params.product.Product_Price}</Text>*/}
                     </CardSection>
                     <CardSection>
                         <Text style={Styles.productDescriptionStyle}>{this.props.navigation.state.params.product.Product_Description}</Text>
                     </CardSection>
                     <CardSection>
-                        <Button onPress={()=>{this.addToCart()}} bgColor={style={backgroundColor:'#673AB7'}}>Add to Cart</Button>
+                        <Stars
+                            isActive={true}
+                            rateMax={5}
+                            isHalfStarEnabled={false}
+                            onStarPress={(rating) => console.log(rating)}
+                            rate={3}
+                            size={60}
+                        />
                     </CardSection>
                 </Card>
                 </View>

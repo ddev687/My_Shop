@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View,Text,Image,Dimensions,Alert,TouchableHighlight} from 'react-native';
+import {View,Text,Image,Dimensions,Alert,TouchableHighlight,ScrollView} from 'react-native';
 import OnClick from "./OnClick";
 import API from '../../config';
 import axios from 'axios';
@@ -12,8 +12,9 @@ class ProductList extends Component
     }
     async getData()
     {
+        subcategoryId=this.props.navigation.state.params.subcategory._id;
         var promise=await new Promise((resolve,reject)=>{
-            fetch(`${API}getProduct`, {
+            fetch(`${API}getProduct?subcategoryId=${subcategoryId}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -29,7 +30,7 @@ class ProductList extends Component
         });
         return promise;
     }
-    async componentWillMount()
+    async componentDidMount()
     {
         this.setState({ loading: true });
         await this.getData().then((product)=>{
@@ -41,13 +42,13 @@ class ProductList extends Component
     }
     showProduct(product)
     {
-        /*this.props.navigation.navigate("ProductDetails",{product});*/
-        this.props.onPress(product);
+        this.props.navigation.navigate("ProductDetails",{product});
+        //this.props.onPress(product);
     }
     renderProducts = (product) => {
         return product.map((product,index) => {
             return(
-                <TouchableHighlight onPress={() => {
+                <OnClick onPress={() => {
                     this.showProduct(product)
                 }} key={index}>
                     <View style={Styles.productBoxStyle}>
@@ -57,7 +58,7 @@ class ProductList extends Component
                         />
                         <Text>{product.Product_Name}</Text>
                     </View>
-                </TouchableHighlight>
+                </OnClick>
             );
         });
     }
@@ -67,11 +68,13 @@ class ProductList extends Component
         }
         var {product}=this.state;
         return(
-            <View style={Styles.productViewStyle}>
-                {
-                    this.renderProducts(product)
-                }
-            </View>
+            <ScrollView>
+                <View style={Styles.productViewStyle}>
+                    {
+                        this.renderProducts(product)
+                    }
+                </View>
+            </ScrollView>
         );
     }
 }

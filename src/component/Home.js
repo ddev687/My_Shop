@@ -1,24 +1,22 @@
 import React,{Component} from 'react';
-import {View,Text,ScrollView,Button,Navigator,Dimensions,TouchableHighlight,Image} from 'react-native';
-import API from '../config';
-import {Tile} from 'react-native-elements';
-import Header from './comman/Header';
+import {ScrollView,Dimensions,View,Image,Text} from 'react-native';
 import Slider from './comman/Slider';
+import CategoryList from "./comman/CategoryList";
+import API from '../config';
 import ProductList from "./comman/ProductList";
-import Card from "./comman/Card";
-import CardSection from "./comman/CardSection";
+import OnClick from "./comman/OnClick";
 
 class Home extends Component
 {
     constructor(props)
     {
         super(props);
-        this.state={category:[],loading:false};
+        this.state={product:[],loading:false};
     }
     async getData()
     {
         var promise=await new Promise((resolve,reject)=>{
-            fetch(`${API}getCategory`, {
+            fetch(`${API}getProduct`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -26,6 +24,7 @@ class Home extends Component
                 }
             }).then((response) => response.json())
                 .then((responseJson) => {
+                    debugger
                     resolve(responseJson);
                 }).catch((error) => {
                 alert(error);
@@ -37,64 +36,53 @@ class Home extends Component
     async componentWillMount()
     {
         this.setState({ loading: true });
-        await this.getData().then((category)=>{
+        await this.getData().then((product)=>{
             this.setState({
                 loading:false,
-                category
+                product
             })
         })
     }
-    showProduct(category)
-    {
-        this.props.navigation.navigate("ProductList",{product});
-        /*this.props.onPress(product);*/
-    }
-    static navigationOptions={
-        tabBarLabel:'Home',
-        tabBarIcon:(tintColor)=>{
+    renderProducts = (product) => {
+        return product.map((product,index) => {
             return(
-               {/* <MatrialIcon
-                    name="menu"
-                    size={50}
-                    style={{color:tintColor}}>
-                </MatrialIcon>*/}
-            );
-        }
-    };
-    onItemPress = (product) => {
-        this.props.navigation.navigate('ProductDetails',{product})
-    }
-    renderCategory = (category) => {
-        return category.map((category,index) => {
-            return(
-                <TouchableHighlight onPress={() => {
-                    this.showProduct(category)
+                <OnClick onPress={() => {
+                    this.showProduct(product)
                 }} key={index}>
                     <View style={Styles.productBoxStyle}>
-                        <Tile
-                        imageSrc={{uri:category.Category_Image}}
-                        title={category.Category_Name}
-                        featured
-                        caption={category.Category_Description}
+                        <Image
+                            source={{uri:product.Product_Image}}
+                            style={{height:100,width:150,margin:10}}
                         />
+                        <Text>{product.Product_Name}</Text>
                     </View>
-                </TouchableHighlight>
+                </OnClick>
             );
         });
     }
+    /*onPress(category){
+        this.props.navigation.navigate('ProductDetails',{category})
+    }*/
     render(){
-        if (this.state.loading) {
-            return <View><Slider/><Text>Loading...</Text></View>
-        }
-        var {category}=this.state;
+        var {product}=this.state;
         return(
             <ScrollView>
                 <Slider/>
-            <View style={Styles.productViewStyle}>
-                {
-                    this.renderCategory(category)
-                }
-            </View>
+                <CategoryList {...this.props}/>
+                <ScrollView horizontal={true}>
+                    <View style={Styles.productViewStyle}>
+                        {
+                            this.renderProducts(product)
+                        }
+                    </View>
+                </ScrollView>
+                <ScrollView horizontal={true}>
+                    <View style={Styles.productViewStyle}>
+                        {
+                            this.renderProducts(product)
+                        }
+                    </View>
+                </ScrollView>
             </ScrollView>
         );
     }
@@ -102,21 +90,18 @@ class Home extends Component
 
 const Styles={
     productBoxStyle:{
-        borderWidth:2,
-        borderColor:'#000',
-        marginTop:'2%'
-        /*margin:2,
-        width:Dimensions.get('window').width/1,
-        height:Dimensions.get('window').height/3,
+        margin:2,
+        width:Dimensions.get('window').width/2 -6,
+        height:150,
         backgroundColor:'#fff',
         justifyContent:'center',
-        alignItems:'center'*/
+        alignItems:'center'
     },
     productViewStyle:{
-        /*flexWrap:'wrap',
+        flexWrap:'wrap',
         flexDirection:'row',
         flex:1,
-        padding:2*/
+        padding:2
     }
 }
 

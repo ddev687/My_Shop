@@ -9,7 +9,7 @@ class Slider extends Component
         super(props);
 
         this.state = {
-            position: 1,
+            position: 0,
             interval: null
         };
     }
@@ -34,7 +34,6 @@ class Slider extends Component
                 ]}
                              position={this.state.position}
                              onPositionChanged={position => this.setState({position})}
-                             style={{height:50}}
                 />
             </View>
         );

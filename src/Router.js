@@ -5,7 +5,8 @@ import Home from '../src/component/Home';
 import MainPage from '../src/component/MainPage';
 import ProductDetails from '../src/component/comman/ProductDetails';
 import ProductList from '../src/component/comman/ProductList';
-import OnClick from '../src/component/comman/OnClick';
+import CategoryList from '../src/component/comman/CategoryList';
+import SubcategoryList from '../src/component/comman/SubcategoryList';
 
 /*
 this.state={Category:[],loading:false};
@@ -45,6 +46,20 @@ const Router = StackNavigator({
         screen:Register,
         navigationOptions:{
             headerTitle:"Register",
+            gesturesEnabled: false,
+        },
+    },
+    CategoryList:{
+        screen:CategoryList,
+        navigationOptions:{
+            headerTitle:"Register",
+            gesturesEnabled: false,
+        },
+    },
+    SubcategoryList:{
+        screen:SubcategoryList,
+        navigationOptions:{
+            headerTitle:"My Shop",
             gesturesEnabled: false,
         },
     },
