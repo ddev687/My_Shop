@@ -11,12 +11,12 @@ class Home extends Component
     constructor(props)
     {
         super(props);
-        this.state={product:[],loading:false};
+        this.state={product:[],loading:false,limit:10};
     }
     async getData()
     {
         var promise=await new Promise((resolve,reject)=>{
-            fetch(`${API}getProduct`, {
+            fetch(`${API}getProduct?limit=${this.state.limit}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -63,10 +63,27 @@ class Home extends Component
     /*onPress(category){
         this.props.navigation.navigate('ProductDetails',{category})
     }*/
+    async _renderPage()
+    {
+        this.setState({ loading: true,limit:this.state.limit+10});
+        await this.getData().then((product)=>{
+        this.setState({
+            loading:false,
+            product
+        });
+    })
+    }
     render(){
         var {product}=this.state;
         return(
-            <ScrollView>
+            <ScrollView onScroll={(e)=>{
+                var windowHeight = Dimensions.get('window').height,
+                    height = e.nativeEvent.contentSize.height,
+                    offset = e.nativeEvent.contentOffset.y;
+                if( windowHeight + offset >= height ){
+                    this._renderPage();
+                }
+            }}>
                 <Slider/>
                 <CategoryList {...this.props}/>
                 <ScrollView horizontal={true}>
@@ -76,13 +93,14 @@ class Home extends Component
                         }
                     </View>
                 </ScrollView>
-                <ScrollView horizontal={true}>
+                <ScrollView>
                     <View style={Styles.productViewStyle}>
                         {
                             this.renderProducts(product)
                         }
                     </View>
                 </ScrollView>
+
             </ScrollView>
         );
     }

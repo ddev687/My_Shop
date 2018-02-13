@@ -7,6 +7,8 @@ import ProductDetails from '../src/component/comman/ProductDetails';
 import ProductList from '../src/component/comman/ProductList';
 import CategoryList from '../src/component/comman/CategoryList';
 import SubcategoryList from '../src/component/comman/SubcategoryList';
+import Profile from '../src/component/Profile';
+
 
 /*
 this.state={Category:[],loading:false};
@@ -101,6 +103,9 @@ const Router = StackNavigator({
 const SideBarMenu=DrawerNavigator({
     Home: {
         screen: Router
+    },
+    Profile: {
+        screen: Profile
     }
 });
 

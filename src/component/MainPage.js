@@ -25,7 +25,7 @@ class MainPage extends Component
     UserLoginFunction = () =>{
         const { UserEmail }  = this.state ;
         const { UserPassword }  = this.state ;
-        fetch('http://localhost:3000/loginUser', {
+        fetch('http://localhost:3000/loginLocal', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

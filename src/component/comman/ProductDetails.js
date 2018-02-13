@@ -4,7 +4,7 @@ import Card from "./Card";
 import CardSection from "./CardSection";
 import Button from "./Button";
 import { PricingCard } from 'react-native-elements';
-import Stars from 'react-native-stars-rating';
+
 
 var tmp=[];
 class ProductDetails extends Component
@@ -86,14 +86,6 @@ class ProductDetails extends Component
                         <Text style={Styles.productDescriptionStyle}>{this.props.navigation.state.params.product.Product_Description}</Text>
                     </CardSection>
                     <CardSection>
-                        <Stars
-                            isActive={true}
-                            rateMax={5}
-                            isHalfStarEnabled={false}
-                            onStarPress={(rating) => console.log(rating)}
-                            rate={3}
-                            size={60}
-                        />
                     </CardSection>
                 </Card>
                 </View>
