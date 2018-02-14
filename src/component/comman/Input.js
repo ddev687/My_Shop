@@ -1,5 +1,6 @@
 import React from 'react';
 import {View,TextInput} from 'react-native';
+import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 
 export default Input=({value,onChangeText,placeholder,secureTextEntry})=>{
@@ -18,23 +19,22 @@ export default Input=({value,onChangeText,placeholder,secureTextEntry})=>{
 
 const Styles={
     inputStyle:{
-        margin:'2%',
-        borderWidth:2,
+        margin:responsiveHeight(2),
+        borderWidth:responsiveWidth(0.5),
         borderColor:'black',
-        borderRadius:15,
-        fontSize:25,
-        width:'95%',
-        lineHeight:30,
-        paddingLeft:'3%',
-        marginTop:'3%',
+        borderRadius:responsiveHeight(2),
+        fontSize:responsiveFontSize(4),
+        lineHeight:responsiveHeight(4),
+        width:responsiveWidth(94),
+        paddingLeft:responsiveWidth(2),
+        marginTop:responsiveHeight(2),
         color:'#000',
     },
     inputViewStyle:{
-        height:200,
-        width:'100%',
+        height:responsiveHeight(10),
+        width:responsiveWidth(90),
         flexDirection:'column',
         flex:1,
-        margin:'5%',
         alignItems:'center'
     }
 }

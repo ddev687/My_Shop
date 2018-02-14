@@ -4,7 +4,7 @@ import Card from "./Card";
 import CardSection from "./CardSection";
 import Button from "./Button";
 import { PricingCard } from 'react-native-elements';
-
+import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 var tmp=[];
 class ProductDetails extends Component
@@ -17,9 +17,9 @@ class ProductDetails extends Component
     renderStock()
     {
         if(this.props.navigation.state.params.product.Product_Stock > 0){
-            return <Text style={{fontSize:20,marginTop:'3%',marginRight:'2%'}}>In Stock</Text>
+            return <Text style={{fontSize:responsiveFontSize(3),marginTop:responsiveHeight(1),marginRight:responsiveWidth(2)}}>In Stock</Text>
         }else{
-            return <Text style={{fontSize:20,marginTop:'3%',marginRight:'2%'}}>Outof Stock</Text>
+            return <Text style={{fontSize:responsiveFontSize(3),marginTop:responsiveHeight(1),marginRight:responsiveWidth(2)}}>Outof Stock</Text>
         }
     }
     /*async getData()
@@ -69,7 +69,7 @@ class ProductDetails extends Component
                     <CardSection>
                         <Image
                             source={{uri:this.props.navigation.state.params.product.Product_Image}}
-                            style={{height:400,width:'96%',margin:'2%'}}/>
+                            style={{height:responsiveHeight(60),width:responsiveWidth(96),margin:responsiveHeight(1)}}/>
                     </CardSection>
                     <CardSection>
                         <PricingCard
@@ -78,7 +78,7 @@ class ProductDetails extends Component
                             price={'Rs : '+this.props.navigation.state.params.product.Product_Price}
                             info={['User Rating', 'Basic Support', 'All Core Features']}
                             button={{ title: 'Add To Cart', icon: 'add-shopping-cart' }}
-                            containerStyle={{width:'96%',margin:'2%'}}
+                            containerStyle={{width:responsiveWidth(96),margin:responsiveHeight(1)}}
                         />
                         {/*<Text style={Styles.productNameStyle}>Rs.{this.props.navigation.state.params.product.Product_Price}</Text>*/}
                     </CardSection>
@@ -96,14 +96,14 @@ class ProductDetails extends Component
 
 const Styles={
     productNameStyle:{
-        fontSize:30,
+        fontSize:responsiveFontSize(4),
         color:'black',
-        marginLeft:'2%'
+        marginLeft:responsiveWidth(1.5)
     },
     productDescriptionStyle:{
-        fontSize:20,
+        fontSize:responsiveFontSize(2.5),
         color:'black',
-        marginLeft:'2%'
+        marginLeft:responsiveWidth(1.5)
     }
 }
 

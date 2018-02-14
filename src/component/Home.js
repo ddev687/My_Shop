@@ -5,15 +5,16 @@ import CategoryList from "./comman/CategoryList";
 import API from '../config';
 import ProductList from "./comman/ProductList";
 import OnClick from "./comman/OnClick";
+import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 class Home extends Component
 {
     constructor(props)
     {
         super(props);
-        this.state={product:[],loading:false,limit:10};
+        //this.state={product:[],loading:false,limit:10};
     }
-    async getData()
+    /*async getData()
     {
         var promise=await new Promise((resolve,reject)=>{
             fetch(`${API}getProduct?limit=${this.state.limit}`, {
@@ -32,8 +33,8 @@ class Home extends Component
             });
         });
         return promise;
-    }
-    async componentWillMount()
+    }*/
+    /*async componentWillMount()
     {
         this.setState({ loading: true });
         await this.getData().then((product)=>{
@@ -52,29 +53,32 @@ class Home extends Component
                     <View style={Styles.productBoxStyle}>
                         <Image
                             source={{uri:product.Product_Image}}
-                            style={{height:100,width:150,margin:10}}
+                            style={{height:responsiveHeight(35),width:responsiveWidth(45),margin:10}}
                         />
-                        <Text>{product.Product_Name}</Text>
+                        <View style={{height:responsiveHeight(10)}}>
+                            <Text style={{fontSize:responsiveFontSize(4)}}>{product.Product_Name}</Text>
+                        </View>
                     </View>
                 </OnClick>
             );
         });
-    }
+    }*/
     /*onPress(category){
         this.props.navigation.navigate('ProductDetails',{category})
     }*/
     async _renderPage()
     {
-        this.setState({ loading: true,limit:this.state.limit+10});
-        await this.getData().then((product)=>{
-        this.setState({
-            loading:false,
-            product
-        });
-    })
+        //alert("fdfdf");
+        /*this.setState({ loading: true,limit:this.state.limit+10});*/
+        <ProductList/>
+        /*await this.getData().then((product)=>{
+            this.setState({
+                loading:false,
+                product
+            });
+        })*/
     }
     render(){
-        var {product}=this.state;
         return(
             <ScrollView onScroll={(e)=>{
                 var windowHeight = Dimensions.get('window').height,
@@ -87,20 +91,9 @@ class Home extends Component
                 <Slider/>
                 <CategoryList {...this.props}/>
                 <ScrollView horizontal={true}>
-                    <View style={Styles.productViewStyle}>
-                        {
-                            this.renderProducts(product)
-                        }
-                    </View>
+                    <ProductList {...this.props}/>
                 </ScrollView>
-                <ScrollView>
-                    <View style={Styles.productViewStyle}>
-                        {
-                            this.renderProducts(product)
-                        }
-                    </View>
-                </ScrollView>
-
+                <ProductList/>
             </ScrollView>
         );
     }
@@ -108,9 +101,9 @@ class Home extends Component
 
 const Styles={
     productBoxStyle:{
-        margin:2,
+        margin:responsiveHeight(0.2),
         width:Dimensions.get('window').width/2 -6,
-        height:150,
+        height:responsiveHeight(50),
         backgroundColor:'#fff',
         justifyContent:'center',
         alignItems:'center'
@@ -118,8 +111,7 @@ const Styles={
     productViewStyle:{
         flexWrap:'wrap',
         flexDirection:'row',
-        flex:1,
-        padding:2
+        flex:1
     }
 }
 

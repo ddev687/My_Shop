@@ -1,10 +1,11 @@
 import React,{Component} from 'react';
-import {View,Text,ScrollView,Button,Navigator,Dimensions,TouchableHighlight,Image} from 'react-native';
+import {View,Text,ScrollView,Button,Navigator,Dimensions,TouchableHighlight,ImageBackground} from 'react-native';
 import API from '../../config';
 import {Tile} from 'react-native-elements';
 import Header from './Header';
 import Slider from './Slider';
 import OnClick from "./OnClick";
+import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 class CategoryList extends Component
 {
@@ -56,11 +57,14 @@ class CategoryList extends Component
                     this.showProduct(subcategory)
                 }} key={index}>
                     <View style={Styles.productBoxStyle}>
-                        <Image
+                        <ImageBackground
                             source={{uri:subcategory.Subcategory_Image}}
-                            style={{height:100,width:150,margin:10}}
-                        />
-                        <Text>{subcategory.Subcategory_Name}</Text>
+                            //resizeMode={'contain'}
+                            style={{height:responsiveHeight(20),width:responsiveWidth(96),margin:10}}>
+                            <View style={{justifyContent:'center',backgroundColor:'#fff',opacity:0.9,alignItems:'center'}}>
+                                <Text style={{fontSize:responsiveFontSize(5)}}>{subcategory.Subcategory_Name}</Text>
+                            </View>
+                        </ImageBackground>
                     </View>
                 </OnClick>
             );
@@ -72,7 +76,7 @@ class CategoryList extends Component
         }
         var {subcategory}=this.state;
         return(
-            <View style={Styles.productViewStyle}>
+            <View style={{backgroundColor:'#fff'}}>
                 {
                     this.renderSubcategory(subcategory)
                 }
@@ -83,9 +87,13 @@ class CategoryList extends Component
 
 const Styles={
     productBoxStyle:{
-        borderWidth:2,
+        borderWidth:responsiveWidth(0.5),
+        height:responsiveHeight(25),
         borderColor:'#000',
-        marginTop:'2%'
+        //backgroundColor:'#fff',
+        justifyContent:'center',
+        alignItems:'center',
+        marginBottom:responsiveHeight(2)
     }
 }
 

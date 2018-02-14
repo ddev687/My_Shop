@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {View,TouchableWithoutFeedback,Image,Alert} from 'react-native';
 import Input from '../component/comman/Input';
 import Button from '../component/comman/Button';
+import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 class Register extends Component
 {
@@ -39,10 +40,11 @@ class Register extends Component
     }
     render(){
         return(
-            <View>
+            <View style={{flex:1}}>
                 <Image
+                    resizeMode={'contain'}
                     source={require('/Users/lanet/Desktop/React-Native/MyShop/images/Icon.png')}
-                    style={{width:'80%',height:'30%',alignItems:'center',margin:'10%'}}
+                    style={{width:responsiveWidth(100),height:responsiveHeight(25),alignItems:'center',marginTop:responsiveHeight(5)}}
                 />
                 <Input
                     value={this.state.UserName}

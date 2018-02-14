@@ -1,5 +1,6 @@
 import React from 'react';
 import {View,TouchableOpacity,Text} from 'react-native';
+import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 
 const Button=({onPress,children,bgColor})=>{
@@ -16,16 +17,16 @@ const Button=({onPress,children,bgColor})=>{
 
 const Styles={
     buttonStyle:{
-        borderWidth:2,
+        borderWidth:responsiveWidth(0.5),
         borderColor:'#fff',
-        borderRadius:20,
-        padding:10,
-        minWidth:'35%',
+        borderRadius:responsiveHeight(5),
+        padding:responsiveHeight(2),
+        minWidth:responsiveWidth(40),
         alignItems:'center',
-        marginTop:'5%'
+        marginTop:responsiveHeight(2)
     },
     buttonTextStyle:{
-        fontSize:20,
+        fontSize:responsiveFontSize(3),
         color:'#fff',
     }
 }

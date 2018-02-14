@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {View} from 'react-native';
 import ImageSlider from 'react-native-image-slider';
+import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 
 class Slider extends Component
@@ -26,7 +27,7 @@ class Slider extends Component
 
     render(){
         return(
-            <View style={Styles.sliderStyle}>
+            <View>
                 <ImageSlider images={[
                     '/Users/lanet/Desktop/React-Native/MyShop/images/slider_1.jpg',
                     '/Users/lanet/Desktop/React-Native/MyShop/images/slider_2.jpg',
@@ -40,10 +41,5 @@ class Slider extends Component
     }
 }
 
-const Styles={
-    sliderStyle:{
-        height:165,
-    }
-}
 
 export default Slider;
