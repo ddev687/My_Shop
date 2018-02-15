@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Text,TextInput,View,ImageBackground,Image,Alert,TouchableWithoutFeedback,WebView,Linking,Dimensions} from 'react-native';
+import {Text,TextInput,View,ImageBackground,Image,Alert,TouchableWithoutFeedback,WebView,Linking,Dimensions,AsyncStorage} from 'react-native';
 import Button from "./comman/Button";
 import Modal from 'react-native-modal';
 import {API} from "../config";
@@ -37,12 +37,13 @@ class MainPage extends Component
             })
         }).then((response) => response.json())
             .then((responseJson) => {
-            if(responseJson=="Login Successfully"){
+            if(responseJson){
                 this.setState({modalVisible:false});
                 //Alert.alert(responseJson);
+                AsyncStorage.setItem('Token', responseJson);
                 this.props.navigation.navigate("Home");
             }else{
-                Alert.alert(responseJson);
+                Alert.alert("Email and Password is Wrong.");
             }
             }).catch((error) => {
             console.error(error);

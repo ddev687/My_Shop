@@ -8,6 +8,7 @@ import ProductList from '../src/component/comman/ProductList';
 import CategoryList from '../src/component/comman/CategoryList';
 import SubcategoryList from '../src/component/comman/SubcategoryList';
 import Profile from '../src/component/Profile';
+import Logout from '../src/component/comman/Logout';
 
 
 /*
@@ -70,7 +71,7 @@ const Router = StackNavigator({
         navigationOptions:{
             headerTitle:"My Shop",
             gesturesEnabled: false,
-        },
+        }
     },
     ProductList:{
         screen:ProductList,
@@ -91,7 +92,7 @@ const Router = StackNavigator({
         initialPage:'MainPage',
         mode: 'modal',
         headerStyle:{
-            backgroundColor:'#B71C1C'
+            backgroundColor:'#1565C0'
         },
         headerTintColor:'#fff',
         headerTitleStyle:{
@@ -106,6 +107,9 @@ const SideBarMenu=DrawerNavigator({
     },
     Profile: {
         screen: Profile
+    },
+    Logout: {
+        screen: Logout
     }
 });
 

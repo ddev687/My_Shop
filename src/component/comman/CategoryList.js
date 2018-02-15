@@ -89,9 +89,13 @@ const Styles={
         borderWidth:responsiveWidth(0.5),
         height:responsiveHeight(35),
         borderColor:'#000',
+        backgroundColor:'#fff',
         justifyContent:'center',
         alignItems:'center',
         marginBottom:responsiveHeight(2)
+    },
+    productViewStyle:{
+        //marginTop:responsiveHeight(7.5)
     }
 }
 

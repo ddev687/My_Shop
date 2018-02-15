@@ -6,13 +6,15 @@ import API from '../config';
 import ProductList from "./comman/ProductList";
 import OnClick from "./comman/OnClick";
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
+import OfferProductList from "./comman/OfferProductList";
+import Search from "./comman/Search";
+import Icon from 'react-native-vector-icons';
 
 class Home extends Component
 {
     constructor(props)
     {
         super(props);
-        //this.state={product:[],loading:false,limit:10};
     }
     /*async getData()
     {
@@ -66,35 +68,25 @@ class Home extends Component
     /*onPress(category){
         this.props.navigation.navigate('ProductDetails',{category})
     }*/
-    async _renderPage()
-    {
-        //alert("fdfdf");
-        /*this.setState({ loading: true,limit:this.state.limit+10});*/
-        <ProductList/>
-        /*await this.getData().then((product)=>{
-            this.setState({
-                loading:false,
-                product
-            });
-        })*/
-    }
     render(){
         return(
-            <ScrollView onScroll={(e)=>{
-                var windowHeight = Dimensions.get('window').height,
-                    height = e.nativeEvent.contentSize.height,
-                    offset = e.nativeEvent.contentOffset.y;
-                if( windowHeight + offset >= height ){
-                    this._renderPage();
-                }
-            }}>
-                <Slider/>
-                <CategoryList {...this.props}/>
-                <ScrollView horizontal={true}>
+            <View style={{backgroundColor:'#1565C0',flexDirection:'column'}}>
+                <Search/>
+                <ScrollView onScroll={(e)=>{
+                    var windowHeight = Dimensions.get('window').height,
+                        height = e.nativeEvent.contentSize.height,
+                        offset = e.nativeEvent.contentOffset.y;
+                    if( windowHeight + offset >= height ){
+
+                    }
+                }}
+                        scrollEventThrottle={400}>
+                {/*<Slider/>*/}
+                    <CategoryList {...this.props}/>
+                    <OfferProductList {...this.props}/>
                     <ProductList {...this.props}/>
                 </ScrollView>
-                <ProductList/>
-            </ScrollView>
+            </View>
         );
     }
 }

@@ -3,7 +3,7 @@ import {View,TextInput} from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 
-export default Input=({value,onChangeText,placeholder,secureTextEntry})=>{
+const Input=({value,onChangeText,placeholder,secureTextEntry})=>{
     return(
         <View style={Styles.viewStyle}>
             <TextInput
@@ -22,7 +22,6 @@ const Styles={
         margin:responsiveHeight(2),
         borderWidth:responsiveWidth(0.5),
         borderColor:'black',
-        borderRadius:responsiveHeight(2),
         fontSize:responsiveFontSize(4),
         lineHeight:responsiveHeight(4),
         width:responsiveWidth(94),
@@ -38,3 +37,5 @@ const Styles={
         alignItems:'center'
     }
 }
+
+export default Input;
